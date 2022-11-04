@@ -14,14 +14,16 @@ internetservice = st.selectbox('Internet service', ['DSL', 'Fiber optic', 'No'])
 onlinebackup = st.selectbox('Online backup', ['No', 'Yes', 'No internet service'])
 
 # Convert inputs to DataFrame
-df_new = pd.DataFrame({'tenure': [tenure], 'monthlycharges': [monthlycharges], 'totalcharges': [totalcharges], 'contract': [contract],      'onlinesecurity': [
-                      onlinesecurity], 'techsupport': [techsupport], 'internetservice': [internetservice], 'onlinebackup': [onlinebackup]})
+x = {'contract': contract, 'onlinesecurity': onlinesecurity, 'techsupport': techsupport, 'internetservice': internetservice, 'onlinebackup': onlinebackup,
+'tenure': tenure,'monthlycharges': monthlycharges, 'totalcharges': totalcharges }
+
+x_df = pd.DataFrame(x, index=[0])
 
 # Load the transformer
 transformer = pkl.load(open('transformer.pkl', 'rb'))
 
 # Apply the transformer on the inputs
-X_new = transformer.transform(df_new)
+X_new = transformer.transform(x_df)
 
 # Load the model
 model = pkl.load(open('log_reg.pkl', 'rb'))
